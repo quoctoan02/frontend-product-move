@@ -1,0 +1,107 @@
+@import "../../../../styles/common.scss";
+
+// %dashboard-box-header {
+//     height       : 50px;
+//     display      : flex;
+//     padding      : 0 20px;
+//     border-bottom: 1px solid $border;
+//     align-items  : center;
+// }
+
+.business-result-box {
+    @extend %dashboard-box-container;
+
+    .content-up {
+        @extend %dashboard-box-header;
+
+        .metrics-title {
+            @extend %dashboard-box-title;
+        }
+    }
+
+    .content-down {
+        display  : flex;
+        flex-wrap: wrap;
+
+        .metrics-content+.metrics-content {
+            border-left: 1px dashed $border;
+        }
+
+        .metrics-content {
+            display     : flex;
+            height      : 100px;
+            padding-left: 30px;
+            align-items : center;
+            flex        : 25%;
+
+
+            .icon-left {
+                color          : #fff;
+                width          : 40px;
+                height         : 40px;
+                display        : flex;
+                align-items    : center;
+                border-radius  : 50%;
+                justify-content: center;
+
+                &.revenue-icon {
+                    background: linear-gradient(65.71deg, #0088FF 28.29%, #33A0FF 97.55%);
+                }
+
+                i {
+                    font-size: 1.6rem;
+                }
+            }
+
+
+            .metrics-info {
+                padding-left   : 5px;
+                display        : flex;
+                flex-flow      : column;
+                gap            : 5px;
+                margin-left    : 5px;
+                justify-content: center;
+
+                .metrics-name {
+                    float      : left;
+                    font-size  : 1rem;
+                    font-weight: 700;
+                    color      : #666;
+                }
+
+                .metrics-number {
+
+                    font-size  : 1.5rem;
+                    line-height: 28px;
+
+                    &.revenue-number {
+                        color: #0088FF;
+                    }
+                }
+            }
+
+
+        }
+
+    }
+
+
+
+}
+
+
+@media (max-width: 992px) {}
+
+@media (max-width: 1200px) {}
+
+
+
+
+@media screen and (max-width: 768px) {}
+
+@media screen and (max-width: 576px) {
+    .metrics-content {
+        min-width   : 220px;
+        padding-left: 10px;
+    }
+}

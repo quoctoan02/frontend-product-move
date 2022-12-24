@@ -1,0 +1,17 @@
+@import "../../../../styles/common.scss";
+
+.top-product-box {
+    display       : flex;
+    flex-direction: column;
+    @extend %dashboard-box-container;
+
+    .top-product-header {
+        @extend %dashboard-box-header;
+
+        .top-product-title {
+            @extend %dashboard-box-title;
+        }
+    }
+
+    .top-product-content {}
+}

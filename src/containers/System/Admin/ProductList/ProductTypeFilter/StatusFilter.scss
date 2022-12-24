@@ -1,0 +1,42 @@
+@import "../../../../../styles/common.scss";
+
+.status-filter-box {
+    display       : flex;
+    flex-direction: column;
+    @extend %type-filter-box-container;
+
+    .status-filter-header {
+        @extend %type-filter-box-header;
+
+        .status-filter-title {
+            @extend %type-filter-box-title;
+        }
+
+        .show-hide-icon {
+            width          : 2rem;
+            height         : 2rem;
+            border-radius  : 50%;
+            display        : flex;
+            align-items    : center;
+            justify-content: center;
+            padding-top    : 2px;
+            border         : none;
+            line-height    : 2rem;
+            z-index        : 8;
+
+
+            &:hover {
+                background-color: #e0e0e0;
+                cursor          : pointer;
+            }
+
+            i {
+                color    : #666;
+                font-size: 13px;
+            }
+        }
+
+    }
+
+    .status-filter-content {}
+}

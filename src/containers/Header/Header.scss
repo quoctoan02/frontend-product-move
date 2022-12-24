@@ -1,0 +1,57 @@
+@import "../../styles/common.scss";
+
+.header-container {
+    width           : 100%;
+    background-color: #fff;
+
+    .top-header-container {
+        height : 70px;
+        display: flex;
+
+        .left-content {
+            height: 100%;
+            width : 30%;
+
+            .header-logo {
+                height    : 40px;
+                margin-top: 10px
+            }
+        }
+
+        .right-content {
+            width          : 70%;
+            height         : 100%;
+            display        : flex;
+            justify-content: flex-end;
+            gap            : 15px;
+            align-items    : center;
+
+            .btn-logout {
+                color      : $colormain;
+                line-height: 40px;
+                height     : 40px;
+                padding    : 0 10px;
+
+                &:hover {
+                    background-color: darken($common-text-color, 5);
+                }
+
+                i {
+                    font-size: $base-size + 1px;
+                }
+            }
+        }
+    }
+
+    .nav-bar-container {
+        z-index         : 999;
+        display         : flex;
+        justify-content : space-between;
+        background-color: $colormain;
+        color           : $common-text-color;
+        min-height      : 50px;
+        position        : relative;
+
+    }
+
+}

@@ -1,0 +1,55 @@
+@import "variables";
+
+%dashboard-box-container {
+    margin-bottom   : 2rem;
+    background-color: #fff;
+    border-radius   : 5px;
+    box-shadow      : $box-shadow;
+
+}
+
+%dashboard-box-title {
+    text-transform: uppercase;
+    line-height   : 20px;
+    font-size     : 1.2rem;
+}
+
+%dashboard-box-header {
+    height       : 50px;
+    display      : flex;
+    padding      : 0 1.5rem;
+    border-bottom: 1px solid $border;
+    align-items  : center;
+
+}
+
+%filter-header {
+    padding-left: 2rem;
+    font-size   : 2rem;
+    font-weight : 700;
+    min-height  : 60px;
+}
+
+%type-filter-box-container {
+    padding         : 8px 0;
+    margin-bottom   : 1.2rem;
+    background-color: #fff;
+    box-shadow      : $box-shadow;
+    border-radius   : 5px;
+
+    %type-filter-box-header {
+        display        : flex;
+        align-items    : center;
+        justify-content: space-between;
+        padding-left   : 2rem;
+        padding-right  : 1.5rem;
+
+
+        %type-filter-box-title {
+            line-height: 20px;
+            font-size  : 1.2rem;
+            font-weight: 600;
+            color      : #111;
+        }
+    }
+}

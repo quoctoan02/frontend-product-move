@@ -1,0 +1,11 @@
+@import "../styles/common.scss";
+
+.main-container {
+    background: $bg-menu-color;
+
+    .container {
+        .content {
+            margin-top: 1.5rem;
+        }
+    }
+}
