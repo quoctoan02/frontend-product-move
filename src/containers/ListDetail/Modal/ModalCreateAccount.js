@@ -3,17 +3,16 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './ModalCreateAccount.scss'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import { Radio, FormControlLabel, RadioGroup, FormControl, FormLabel } from '@mui/material';
+import adminService from '../../../services/adminService';
 class ModalCreateAccount extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            username: '',
             password: '',
-            firstName: '',
-            lastName: '',
-            address: '',
+            role: ''
         }
     }
 
@@ -22,7 +21,7 @@ class ModalCreateAccount extends Component {
 
     checkValidInput = () => {
         let isValid = true;
-        let arrInput = ['email', 'password', 'firstName', 'lastName', 'address']
+        let arrInput = ['username', 'password']
         for (let i = 0; i < arrInput.length; i++) {
             if (!this.state[arrInput[i]]) {
                 isValid = false;
@@ -33,12 +32,16 @@ class ModalCreateAccount extends Component {
         return isValid;
     }
 
-    handleAddNewAccount = () => {
+    handleAddNewAccount = async () => {
         let isValid = this.checkValidInput();
-        if (isValid === true) {
-            this.props.createNewAccount()
+        if (isValid === true && this.state.role) {
+            //this.props.createNewAccount()
+            let message = await adminService.createAccount(this.state.username, this.state.password, this.state.role)
+            //console.log(this.state.username, this.state.password, this.state.role)
+            this.toggle()
         }
     }
+
     handleOnChangeInput = (event, id) => {
         let copyState = { ...this.state };
         copyState[id] = event.target.value;
@@ -46,7 +49,13 @@ class ModalCreateAccount extends Component {
     }
 
     toggle = () => {
-        this.props.toggleOpenModal("factory");
+        this.props.toggleOpenModal();
+    }
+
+    handleChooseRole = (event) => {
+        this.setState({
+            role: event.target.value
+        })
     }
 
     render() {
@@ -66,54 +75,44 @@ class ModalCreateAccount extends Component {
                 <ModalHeader
                     toggle={() => { this.toggle() }}
                     className='modal-title'
-                >Create new user</ModalHeader>
+                >Create new account</ModalHeader>
                 <ModalBody>
                     <div className='modal-user-body'>
                         <div className='input-container'>
-                            <label>Email</label>
+                            <label>Username</label>
                             <input
-                                type="email"
+                                type="username"
                                 className="form-control"
-                                placeholder="Email"
-                                onChange={(event) => { this.handleOnChangeInput(event, "email") }}
-                                value={this.state.email}
+                                placeholder="Username"
+                                onChange={(event) => { this.handleOnChangeInput(event, "username") }}
+                                value={this.state.username}
                             />
                         </div>
                         <div className='input-container'>
                             <label>Password</label>
-                            <input type="password" className="form-control" placeholder="Email"
+                            <input type="password" className="form-control" placeholder="Password"
                                 onChange={(event) => { this.handleOnChangeInput(event, 'password') }}
                                 value={this.state.password} />
                         </div>
-                        <div className='input-container'>
-                            <label>First Name</label>
-                            <input type="text" className="form-control" placeholder="Email"
-                                onChange={(event) => { this.handleOnChangeInput(event, 'firstName') }}
-                                value={this.state.firstName} />
-                        </div>
-                        <div className='input-container'>
-                            <label>Last Name</label>
-                            <input type="text" className="form-control" placeholder="Email"
-                                onChange={(event) => { this.handleOnChangeInput(event, 'lastName') }}
-                                value={this.state.lastName}
-                            />
-                        </div>
-                        <div className='input-container max-width-input'>
-                            <label>Address</label>
-                            <input type="text" className="form-control" placeholder="Email"
-                                onChange={(event) => { this.handleOnChangeInput(event, 'address') }}
-                                value={this.state.address}
-                            />
-                        </div>
                     </div>
+                    <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                        onChange={this.handleChooseRole}
+                    >
+                        <FormControlLabel className='choose-role' value="factory" control={<Radio />} label="Cơ sở sản xuất" />
+                        <FormControlLabel className='choose-role' value="agency" control={<Radio />} label="Trung tâm bảo hành" />
+                        <FormControlLabel className='choose-role' value="insurance" control={<Radio />} label="Đại lý phân phối" />
 
-
+                    </RadioGroup>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary"
-                    // onClick={() => { this.handleAddNewAccount() }}
-
-                    >Add new</Button>{' '}
+                        onClick={() => this.handleAddNewAccount()}
+                    >
+                        Add new account
+                    </Button>
                     <Button color="secondary" onClick={() => { this.toggle() }}>Cancel</Button>
                 </ModalFooter>
             </Modal >

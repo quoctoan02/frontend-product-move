@@ -13,7 +13,7 @@ class DistributionAgent extends Component {
                 <div className="system-container">
                     <div className="system-list">
                         <Switch>
-                            <Route path="/admin/dashboard" component={Dashboard} />
+                            <Route path="/dítribution-agent/dashboard" component={Dashboard} />
                             {/* <Route component={() => { return (<Redirect to={systemMenuPath} />) }} /> */}
 
                         </Switch>

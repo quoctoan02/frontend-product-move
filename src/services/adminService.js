@@ -10,9 +10,15 @@ const adminService = {
      *  "password": "string"
      * }
      */
-    login(loginBody) {
-        return axios.post(`/admin/login`, loginBody)
-    },
+
+    createAccount(username, password, role) {
+        return axios.post(`api/executive-board/provide-account/${role}`, { username, password },
+            {
+                headers: {
+                    'Authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpdHkiOiJhZG1pbiIsImlhdCI6MTY3MTk4MjA3OSwiZXhwIjoxNjcyMDY4NDc5fQ.2jNKYaE-sOih2u-oHOxcyOgxzgPuEyXca90qJG-u7Z8`
+                }
+            })
+    }
 
 };
 

@@ -16,7 +16,7 @@ import {
 } from '@mui/x-data-grid';
 const VISIBLE_FIELDS = ['name', 'rating', 'country', 'dateCreated', 'isAdmin'];
 
-function CustomToolbar({ selectionModel }) {
+function CustomToolbar({ handleOpenModal }) {
     const [anchorElMenu, setAnchorElMenu] = useState(null);
     const openMenu = Boolean(anchorElMenu);
 
@@ -32,15 +32,16 @@ function CustomToolbar({ selectionModel }) {
                 variant="contained"
                 size="small"
                 startIcon=''
-                disabled={selectionModel.length === 0}
-                onClick={(event) => {
-                    setAnchorElMenu(event.currentTarget);
+                //disabled={selectionModel.length === 0}
+                onClick={() => {
+                    handleOpenModal();
+                    //setAnchorElMenu(event.currentTarget);
                 }}
             >
                 ADD
             </Button>
 
-            <Menu
+            {/* <Menu
                 id="menu-options"
                 anchorEl={anchorElMenu}
                 open={openMenu}
@@ -51,12 +52,12 @@ function CustomToolbar({ selectionModel }) {
                 <MenuItem />
                 <MenuItem />
                 <MenuItem />
-            </Menu>
+            </Menu> */}
         </GridToolbarContainer>
     );
 }
 
-export default function DataGridDemo() {
+export default function TableDataGrid(props) {
     const [selectionModel, setSelectionModel] = useState([]);
     const [pageSize, setPageSize] = React.useState(25);
     const { data } = useDemoData({
@@ -64,6 +65,10 @@ export default function DataGridDemo() {
         visibleFields: VISIBLE_FIELDS,
         rowLength: 100,
     });
+
+    const handleOpenModal = () => {
+        props.toggleOpenModal();
+    }
 
     const handleRowClick = (params, event, details) => {
         console.log(params.row.name);
@@ -148,6 +153,7 @@ export default function DataGridDemo() {
                 componentsProps={{
                     toolbar: {
                         selectionModel,
+                        handleOpenModal
                     },
                 }}
             />

@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL,
+    // baseURL: `https://de99-104-28-222-73.ap.ngrok.io/`,
     // withCredentials: true
 });
 

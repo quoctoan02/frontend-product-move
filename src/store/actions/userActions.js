@@ -6,12 +6,12 @@ export const addUserSuccess = () => ({
 
 
 export const userLoginSuccess = (userInfo) => ({
-    type: actionTypes.USER_LOGIN_SUCCESS,
+    type: actionTypes.LOGIN_SUCCESS,
     userInfo: userInfo
 })
 
 export const userLoginFail = () => ({
-    type: actionTypes.USER_LOGIN_FAIL
+    type: actionTypes.LOGIN_FAIL
 })
 
 export const processLogout = () => ({

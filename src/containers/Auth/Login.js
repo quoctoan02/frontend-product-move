@@ -6,7 +6,7 @@ import * as actions from "../../store/actions";
 import './Login.scss';
 import { FormattedMessage } from 'react-intl';
 // import { userService } from '../../services/userService';
-import { handleLoginApi } from '../../services/userService';
+import userService from '../../services/userService';
 
 
 class Login extends Component {
@@ -44,42 +44,27 @@ class Login extends Component {
 
     handleLogin = async () => {
         try {
-            this.props.userLoginSuccess({
-                username: this.state.username,
-                password: this.state.password,
-                role: this.state.role,
-            });
-            this.refresh()
-            this.redirectToDashboardPage(this.state.role)
-            // let data = await handleLoginApi(this.state.username, this.state.password);
-            // if (data && data.errCode !== 0) {
-            //     this.setState({
-            //         errMessage: data.message
-            //     })
-            // }
-            // if (data && data.errCode === 0) {
-            //     this.props.userLoginSuccess(data.user);
-            //     console.log('loging success');
-            // }
+
+            let message = await userService.handleLoginApi(this.state.username, this.state.password);
+            if (message) {
+                this.props.userLoginSuccess({
+                    username: this.state.username,
+                    password: this.state.password,
+                    role: this.state.role,
+                });
+                this.refresh()
+                this.redirectToDashboardPage(this.state.role)
+            }
 
         } catch (e) {
-            // if (e.response) {
-            //     if (e.response.data) {
-            //         this.setState({
-            //             errMessage: e.response.data.message
-            //         })
-            //     }
-            // }
             console.log(e);
         }
     }
 
     handleShowHidePassword = () => {
-
         this.setState({
             showPassword: !this.state.showPassword
         })
-        console.log(this.state.showPassword);
     }
 
     redirectToDashboardPage = (role) => {

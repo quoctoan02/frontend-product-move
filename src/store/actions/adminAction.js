@@ -1,19 +1,23 @@
 import actionTypes from './actionTypes';
+import adminService from '../../services/adminService';
 
-export const addUserSuccess = () => ({
-    type: actionTypes.ADD_USER_SUCCESS
-})
+export const fetchTopDoctor = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await adminService.createFactory()
+            console.log(res)
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_TOP_DOCTOR_SUCCESS,
+                    doctorData: res.data,
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_TOP_DOCTOR_FAILED,
+                })
+            }
+        } catch (error) {
 
-
-export const userLoginSuccess = (userInfo) => ({
-    type: actionTypes.USER_LOGIN_SUCCESS,
-    userInfo: userInfo
-})
-
-export const userLoginFail = () => ({
-    type: actionTypes.USER_LOGIN_FAIL
-})
-
-export const processLogout = () => ({
-    type: actionTypes.PROCESS_LOGOUT
-})
+        }
+    }
+}

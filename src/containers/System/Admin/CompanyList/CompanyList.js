@@ -69,6 +69,7 @@ class CompanyList extends Component {
                 </div>
                 <div className='product-table-right'>
                     <TableDataGrid
+                        toggleOpenModal={this.toggleOpenModal}
                     />
                 </div>
             </div>

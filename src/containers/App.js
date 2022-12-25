@@ -15,8 +15,6 @@ import Admin from '../routes/Admin';
 import Home from '../routes/Home';
 import Login from './Auth/Login';
 import Factory from '../routes/Factory';
-
-import { CustomToastCloseButton } from '../components/CustomToast';
 import ConfirmModal from '../components/ConfirmModal';
 
 class App extends Component {
@@ -57,11 +55,18 @@ class App extends Component {
                         </CustomScrollbars>
 
                         <ToastContainer
-                            className="toast-container" toastClassName="toast-item" bodyClassName="toast-item-body"
-                            autoClose={false} hideProgressBar={true} pauseOnHover={false}
-                            pauseOnFocusLoss={true} closeOnClick={false} draggable={false}
-                            closeButton={<CustomToastCloseButton />}
+                            position="bottom-right"
+                            autoClose={2000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="colored"
                         />
+
                     </div>
                 </Router>
             </Fragment>

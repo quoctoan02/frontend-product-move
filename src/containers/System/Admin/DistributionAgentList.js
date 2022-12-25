@@ -4,44 +4,69 @@ import { connect } from 'react-redux';
 import Filter from '../../ListDetail/Filter';
 import Table from '../../ListDetail/Table';
 import ModalCreateAccount from '../../ListDetail/Modal/ModalCreateAccount';
-import CompanyList from './CompanyList/CompanyList';
-
-class DistributionAgentList extends Component {
+import TableDataGrid from '../../ListDetail/TableDataGrid'
+import * as menuCompany from './CompanyList/menuCompany'
+class CompanyList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            typeModal: '',
-            data: '',
-            filterTitle: 'Phân phối',
-            listFilter: [
-                { typeFilter: 'province', label: 'Địa chỉ' },
-                { typeFilter: 'factory', label: 'Cơ sở sản xuất' },
-                { typeFilter: 'distribution-agent', label: 'Nhà phân phối' },
-                { typeFilter: 'service-center', label: 'Trung tâm bảo hành' }
-            ],
+            menuList: '',
             isOpenModal: false,
         }
     }
 
-    toggleOpenModal = (typeModal) => {
+    componentDidMount() {
+        this.handleMenuCompany(this.props.typeCompany);
+    }
+
+    toggleOpenModal = () => {
         this.setState({
             isOpenModal: !this.state.isOpenModal,
         })
 
-        if (this.state.isOpenModal) {
+    }
+
+    handleMenuCompany = (typeCompany) => {
+        if (typeCompany === 'factory') {
             this.setState({
-                typeModal
+                menuList: menuCompany.factoryProps
+            })
+        }
+        if (typeCompany === 'service-center') {
+            this.setState({
+                menuList: menuCompany.serviceCenterProps
+            })
+        }
+        if (typeCompany === 'distribution-agent') {
+            this.setState({
+                menuList: menuCompany.distributionAgentProps
             })
         }
     }
 
     render() {
-        ;
+        let { menuList } = this.state
 
         return (
             <div className='list-container'>
-                <CompanyList />
+                <ModalCreateAccount
+                    isOpen={this.state.isOpenModal}
+                    toggleOpenModal={this.toggleOpenModal}
+                    createAccount={this.createAccount}
+                />
+                <div className='filter-box-left'>
+                    <Filter
+                        listFilter={menuList.listFilter}
+                        handleGetProductFromParent={this.getProductAfterFiltered}
+                        filterTitle={menuList.title}
+                    />
+                </div>
+                <div className='product-table-right'>
+                    <TableDataGrid
+                        toggleOpenModal={this.toggleOpenModal}
+                    />
+                </div>
             </div>
         );
     }
@@ -59,4 +84,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DistributionAgentList);
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyList);
