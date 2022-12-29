@@ -17,26 +17,12 @@ class FactoryList extends Component {
             isOpenModal: false,
         }
     }
-
-    toggleOpenModal = (typeModal) => {
-        this.setState({
-            isOpenModal: !this.state.isOpenModal,
-        })
-
-        if (this.state.isOpenModal) {
-            this.setState({
-                typeModal
-            })
-        }
-    }
-
     render() {
-
         return (
             <div className='list-container'>
-               <CompanyList 
-                typeFactory={"factory"}
-               />
+                <CompanyList
+                    typeFactory={"factory"}
+                />
             </div>
         );
     }
@@ -45,7 +31,7 @@ class FactoryList extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
     };
 };
 

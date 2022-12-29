@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Filter from '../../ListDetail/Filter';
-import Table from '../../ListDetail/Table';
 import ModalCreateAccount from '../../ListDetail/Modal/ModalCreateAccount';
 class ServiceCenterList extends Component {
     constructor(props) {
@@ -52,9 +51,9 @@ class ServiceCenterList extends Component {
                     />
                 </div>
                 <div className='product-table-right'>
-                    <Table
+                    {/* <Table
                         toggleOpenModal={this.toggleOpenModal}
-                    />
+                    /> */}
                 </div>
             </div>
         );

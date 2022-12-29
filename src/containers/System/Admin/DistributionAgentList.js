@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Filter from '../../ListDetail/Filter';
-import Table from '../../ListDetail/Table';
 import ModalCreateAccount from '../../ListDetail/Modal/ModalCreateAccount';
 import TableDataGrid from '../../ListDetail/TableDataGrid'
 import * as menuCompany from './CompanyList/menuCompany'

@@ -2,17 +2,55 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Filter from '../../../ListDetail/Filter';
-import Table from '../../../ListDetail/Table';
 import ModalCreateAccount from '../../../ListDetail/Modal/ModalCreateAccount';
 import TableDataGrid from '../../../ListDetail/TableDataGrid'
 import * as menuCompany from './menuCompany'
+
+const columns = [
+    {
+        field: 'id',
+        headerName: 'Mã sản phẩm',
+        width: 90
+    },
+    {
+        field: 'name',
+        headerName: 'Tên sản phẩm',
+        width: 150,
+        editable: true,
+    },
+    {
+        field: 'product_line',
+        headerName: 'Dòng sản phẩm',
+        width: 150,
+        editable: true,
+    },
+    {
+        field: 'price',
+        headerName: 'Giá niêm yết',
+        width: 150,
+        editable: true,
+    },
+    {
+        field: 'image_url',
+        headerName: 'Ảnh sản phẩm',
+        width: 150,
+        editable: true,
+    },
+    {
+        field: 'description',
+        headerName: 'Mô tả chi tiết',
+        width: 150,
+        editable: true,
+    },
+]
+
 class CompanyList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             menuList: '',
-            isOpenModal: false,
+            isOpenModalCreate: false,
         }
     }
 
@@ -20,16 +58,16 @@ class CompanyList extends Component {
         this.handleMenuCompany(this.props.typeCompany);
     }
 
-    toggleOpenModal = (typeModal) => {
+    toggleOpenModalCreate = () => {
         this.setState({
-            isOpenModal: !this.state.isOpenModal,
+            isOpenModalCreate: !this.state.isOpenModalCreate,
         })
 
-        if (this.state.isOpenModal) {
-            this.setState({
-                typeModal
-            })
-        }
+        // if (this.state.isOpenModal) {
+        //     this.setState({
+        //         typeModal
+        //     })
+        // }
     }
 
     handleMenuCompany = (typeCompany) => {
@@ -52,12 +90,11 @@ class CompanyList extends Component {
 
     render() {
         let { menuList } = this.state
-
         return (
             <div className='list-container'>
                 <ModalCreateAccount
-                    isOpen={this.state.isOpenModal}
-                    toggleOpenModal={this.toggleOpenModal}
+                    isOpen={this.state.isOpenModalCreate}
+                    toggleOpenModal={this.toggleOpenModalCreate}
                     createAccount={this.createAccount}
                 />
                 <div className='filter-box-left'>
@@ -69,7 +106,9 @@ class CompanyList extends Component {
                 </div>
                 <div className='product-table-right'>
                     <TableDataGrid
-                        toggleOpenModal={this.toggleOpenModal}
+                        rows={''}
+                        columns={columns}
+                        toggleOpenModalCreate={this.toggleOpenModalCreate}
                     />
                 </div>
             </div>
@@ -80,7 +119,7 @@ class CompanyList extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
     };
 };
 

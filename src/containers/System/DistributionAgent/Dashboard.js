@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 class Dashboard extends Component {
 
     render() {
+
         return (
             <div>Hello</div>
         );
@@ -14,7 +15,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn,
+        isLoggedIn: state.user.isLoggedIn
     };
 };
 

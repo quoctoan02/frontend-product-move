@@ -9,7 +9,8 @@ export const path = {
     SERVICE_CENTER: "/service-center",
     FACTORY: "/factory",
     DISTRIBUTION_AGENT: "/distribution-agent",
-    REPORT: "/report"
+    REPORT: "/report",
+    LIST_STOCK: "/list-stock"
 };
 
 export const USER_ROLE = {

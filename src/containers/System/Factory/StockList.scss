@@ -1,0 +1,20 @@
+@import "../../../styles/common.scss";
+
+.list-container {
+    display: flex;
+
+    .filter-box-left {
+        flex         : 20%;
+        margin-right : 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .product-table-right {
+        flex     : 80%;
+        position : sticky;
+        top      : 1rem;
+        z-index  : 9;
+        height   : calc(100vh - 1rem);
+        max-width: 80%;
+    }
+}

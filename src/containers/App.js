@@ -16,6 +16,7 @@ import Home from '../routes/Home';
 import Login from './Auth/Login';
 import Factory from '../routes/Factory';
 import ConfirmModal from '../components/ConfirmModal';
+import DistributionAgent from '../routes/DistributionAgent';
 
 class App extends Component {
 
@@ -49,6 +50,8 @@ class App extends Component {
                                 <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                 <Route path={path.ADMIN} component={userIsAuthenticated(Admin)} />
                                 <Route path={path.FACTORY} component={userIsAuthenticated(Factory)} />
+                                <Route path={path.DISTRIBUTION_AGENT} component={userIsAuthenticated(DistributionAgent)} />
+
                                 {/* <Route component={() => { return (<Redirect to={systemMenuPath} />) }} /> */}
 
                             </Switch>

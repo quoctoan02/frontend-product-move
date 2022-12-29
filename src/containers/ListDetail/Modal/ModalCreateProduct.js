@@ -5,16 +5,18 @@ import './ModalCreateProduct.scss'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import MuiDatePicker from '../../../components/Input/MuiDatePicker';
 import { TextField, Box } from '@mui/material';
+import * as actions from "../../../store/actions";
 class ModalCreateProduct extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            password: '',
-            firstName: '',
-            lastName: '',
-            address: '',
+            imageUrl: '',
+            name: '',
+            line: '',
+            state: '',
+            description: '',
+            price: '',
         }
     }
 
@@ -34,12 +36,20 @@ class ModalCreateProduct extends Component {
         return isValid;
     }
 
-    handleAddNewProduct = () => {
-        let isValid = this.checkValidInput();
-        if (isValid === true) {
-            this.props.createNewProduct()
+    handleAddNewProduct = async () => {
+        let data = {
+            code: 'string',
+            name: this.state.name,
+            price: this.state.price,
+            imageUrl: this.state.imageUrl,
+            productLine: 'string',
+            description: this.state.description
         }
+        this.props.addNewProduct(data)
+        await this.props.fetchProductList()
+        this.toggle()
     }
+
     handleOnChangeInput = (event, id) => {
         let copyState = { ...this.state };
         copyState[id] = event.target.value;
@@ -51,6 +61,8 @@ class ModalCreateProduct extends Component {
     }
 
     render() {
+        let { imageUrl, name, line, description, price } = this.state
+
         return (
 
             < Modal
@@ -70,94 +82,54 @@ class ModalCreateProduct extends Component {
                 >Create new user</ModalHeader>
                 <ModalBody>
                     <div className='modal-user-body'>
-
-                        {/* <div className='input-container'>
-                            <label>Tên sản phẩm</label>
-                            <input
-                                type="text"
-                                placeholder='Tên'
-                                className="form-control"
-                                onChange={(event) => { this.handleOnChangeInput(event, "name") }}
-                                value={this.state.email}
-                            />
-                        </div>
-
-                        <div className='input-container'>
-                            <label>Dòng sản phẩm</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Dòng"
-                                onChange={(event) => { this.handleOnChangeInput(event, 'firstName') }}
-                                value={this.state.firstName} />
-                        </div>
-                        <div className='input-container  max-width-input'>
-                            <label>Mô tả sản phẩm</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Mô tả"
-                                onChange={(event) => { this.handleOnChangeInput(event, "name") }}
-                                value={this.state.email}
-                            />
-                        </div>
-                        <div className='input-container'>
-                            <label>Trạng thái sản phẩm</label>
-                            <input type="text" className="form-control"
-                                placeholder="Trạng thái"
-                                onChange={(event) => { this.handleOnChangeInput(event, 'state') }}
-                                value={this.state.password} />
-                        </div>
-                        <div className='input-container'>
-                            <label>Ngày sản xuất</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Ngày"
-                                onChange={(event) => { this.handleOnChangeInput(event, 'lastName') }}
-                                value={this.state.lastName}
-                            />
-                        </div> */}
                         <form class="row g-3">
                             <div class="col-md-4">
-                                <label for="validationDefault01" class="form-label">First name</label>
-                                <input type="text" class="form-control" id="validationDefault01" value="Mark" required />
+                                <label class="form-label">Ảnh sản phẩm</label>
+                                <input type="text" class="form-control" value={imageUrl}
+                                    onChange={(event) => this.handleOnChangeInput(event, 'imageUrl')}
+                                    required />
                             </div>
                             <div class="col-md-4">
-                                <label for="validationDefault02" class="form-label">Last name</label>
-                                <input type="text" class="form-control" id="validationDefault02" value="Otto" required />
+                                <label class="form-label">Tên sản phẩm</label>
+                                <input type="text" class="form-control" value={name}
+                                    onChange={(event) => this.handleOnChangeInput(event, 'name')}
+                                    required />
                             </div>
                             <div class="col-md-4">
-                                <label for="validationDefaultUsername" class="form-label">Username</label>
-                                <div class="input-group">
-                                    <span class="input-group-text" id="inputGroupPrepend2">@</span>
-                                    <input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="validationDefault03" class="form-label">City</label>
-                                <input type="text" class="form-control" id="validationDefault03" required />
-                            </div>
-                            <div class="col-md-3">
-                                <label for="validationDefault04" class="form-label">State</label>
-                                <select class="form-select" id="validationDefault04" required>
+                                <label class="form-label">Dòng sản phẩm</label>
+                                <select class="form-select" required>
                                     <option selected disabled value="">Choose...</option>
                                     <option>...</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <label for="validationDefault05" class="form-label">Zip</label>
-                                <input type="text" class="form-control" id="validationDefault05" required />
+                                <label class="form-label">Giá niêm yết</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value={price}
+                                        onChange={(event) => this.handleOnChangeInput(event, 'price')}
+                                        required />
+                                    <span class="input-group-text">vnđ</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Trạng thái</label>
+                                <select class="form-select" required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Mô tả</label>
+                                <input type="text" class="form-control" value={description}
+                                    onChange={(event) => this.handleOnChangeInput(event, 'description')}
+                                    required />
                             </div>
                         </form>
                     </div>
-
-
-
                 </ModalBody >
                 <ModalFooter>
                     <Button color="primary"
-                    // onClick={() => { this.handleAddNewProduct() }}
+                        onClick={() => { this.handleAddNewProduct() }}
 
                     >Add new</Button>{' '}
                     <Button color="secondary" onClick={() => { this.toggle() }}>Cancel</Button>
@@ -175,6 +147,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        addNewProduct: (data) => dispatch(actions.addNewProduct(data)),
+        fetchProductList: () => dispatch(actions.fetchProductList()),
+
     };
 };
 

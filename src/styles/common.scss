@@ -23,11 +23,27 @@
 
 }
 
+%filter-box-left {
+    flex         : 15%;
+    margin-right : 2rem;
+    margin-bottom: 2rem;
+}
+
+%product-table-right {
+    flex     : 85%;
+    position : sticky;
+    top      : 1rem;
+    z-index  : 9;
+    height   : calc(100vh - 1rem);
+    max-width: 80%;
+}
+
+
 %filter-header {
-    padding-left: 2rem;
-    font-size   : 2rem;
+    padding-left: 1.5rem;
+    font-size   : 1.8rem;
     font-weight : 700;
-    min-height  : 60px;
+    min-height  : 50px;
 }
 
 %type-filter-box-container {
@@ -41,13 +57,13 @@
         display        : flex;
         align-items    : center;
         justify-content: space-between;
-        padding-left   : 2rem;
-        padding-right  : 1.5rem;
+        padding-left   : 1.5rem;
+        padding-right  : 1rem;
 
 
         %type-filter-box-title {
             line-height: 20px;
-            font-size  : 1.2rem;
+            font-size  : 1.1rem;
             font-weight: 600;
             color      : #111;
         }

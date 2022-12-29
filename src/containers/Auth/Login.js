@@ -44,14 +44,28 @@ class Login extends Component {
 
     handleLogin = async () => {
         try {
+            let roleUrl = ''
+            if (this.state.role === 'admin') {
+                roleUrl = 'executive-board'
+            }
+            if (this.state.role === 'factory') {
+                roleUrl = 'factory'
+            }
+            if (this.state.role === 'service-center') {
+                roleUrl = 'insurance'
+            }
+            if (this.state.role === 'distribution-agent') {
+                roleUrl = 'agency'
+            }
 
-            let message = await userService.handleLoginApi(this.state.username, this.state.password);
-            if (message) {
+            let res = await userService.handleLoginApi(this.state.username, this.state.password, roleUrl)
+            if (res.accessToken) {
                 this.props.userLoginSuccess({
                     username: this.state.username,
                     password: this.state.password,
                     role: this.state.role,
                 });
+                localStorage.setItem('accessToken', res.accessToken)
                 this.refresh()
                 this.redirectToDashboardPage(this.state.role)
             }
@@ -72,6 +86,12 @@ class Login extends Component {
         navigate(`/${role}/dashboard`);
     }
 
+    handleChooseRole = (event) => {
+        this.setState({
+            role: event.target.value
+        })
+    }
+
     render() {
 
 
@@ -82,7 +102,7 @@ class Login extends Component {
                     <div className="login-content row">
                         <div className="col-12 text-center login-title">Login</div>
                         <div className="col-12 form-group">
-                            <label>Username: </label>
+                            <label>Tên đăng nhập: </label>
                             <input
                                 type="text"
                                 className="form-control login-input"
@@ -94,7 +114,7 @@ class Login extends Component {
 
                         </div>
                         <div className="col-12 form-group">
-                            <label>Password: </label>
+                            <label>Mật khẩu: </label>
                             <div className="login-password">
                                 <input
                                     type={this.state.showPassword ? 'text' : 'password'}
@@ -112,25 +132,33 @@ class Login extends Component {
                         <div className="col-12" style={{ color: 'red' }}>
                             {this.state.errMessage}
                         </div>
+                        <div className="col-6">
+                            <label>
+                                Quyền đăng nhập:
+                            </label>
+                            <div className="col-6"></div>
+                            <select className="form-select choose-role"
+                                value={this.state.role}
+                                onChange={this.handleChooseRole}>
+                                <option value="admin" selected>Ban điều hành</option>
+                                <option value="factory">Cơ sở sản xuất</option>
+                                <option value="service-center">Trung tâm bảo hành</option>
+                                <option value="distribution-agent">Đại lý phân phối</option>
+                            </select>
+                        </div>
+
                         <div className="col-12">
                             <button
                                 className="btn-login"
                                 onClick={() => this.handleLogin()}
-                            >Login</button>
+                            >Đăng nhập</button>
                         </div>
                         <div className="col-12">
                             <span className="forgot-password">Forgot your password?</span>
                         </div>
-                        <div className="col-12 text-center login-with mt-3">
-                            <span className="">Or login with:</span>
-                        </div>
-                        <div className="col-12 social-login">
-                            <i className="fab fa-facebook social-icon fb"></i>
-                            <i className="fab fa-google-plus social-icon gg"></i>
-                        </div>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }
@@ -145,10 +173,8 @@ const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
         // userLoginFail: () => dispatch(actions.adminLoginFail()),
-        userLoginSuccess: (userInfo) => dispatch(actions.userLoginSuccess(userInfo))
+        userLoginSuccess: (userInfo, token) => dispatch(actions.userLoginSuccess(userInfo, token))
     };
-
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

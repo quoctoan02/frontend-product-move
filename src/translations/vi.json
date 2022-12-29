@@ -37,7 +37,9 @@
             "subsidiary": "Công ty thành viên",
             "partner": "Đối tác",
             "create-account": "Cấp tài khoản"
-        }
+        },
+        "stock": "Kho",
+        "list-stock": "Danh sách kho"
     },
     "system": {
         "dashboard": {

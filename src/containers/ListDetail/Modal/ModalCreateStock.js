@@ -7,14 +7,12 @@ import { Radio, FormControlLabel, RadioGroup } from '@mui/material';
 import adminService from '../../../services/adminService';
 import * as actions from "../../../store/actions";
 
-class ModalCreateAccount extends Component {
+class ModalCreateStock extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            password: '',
-            role: ''
+            category: '',
         }
     }
 
@@ -23,21 +21,21 @@ class ModalCreateAccount extends Component {
 
     checkValidInput = () => {
         let isValid = true;
-        let arrInput = ['username', 'password']
-        for (let i = 0; i < arrInput.length; i++) {
-            if (!this.state[arrInput[i]]) {
-                isValid = false;
-                alert('Missing parameter ' + arrInput[i] + ' in input');
-                break;
-            }
-        }
+        // let arrInput = ['username', 'password']
+        // for (let i = 0; i < arrInput.length; i++) {
+        //     if (!this.state[arrInput[i]]) {
+        //         isValid = false;
+        //         alert('Missing parameter ' + arrInput[i] + ' in input');
+        //         break;
+        //     }
+        // }
         return isValid;
     }
 
-    handleAddNewAccount = async () => {
+    handleAddNewStock = async () => {
         let isValid = this.checkValidInput();
-        if (isValid === true && this.state.role) {
-            this.props.addNewAccount(this.state.username, this.state.password, this.state.role)
+        if (isValid === true) {
+            this.props.addNewStock(this.state.category)
             this.toggle()
         }
     }
@@ -51,13 +49,6 @@ class ModalCreateAccount extends Component {
     toggle = () => {
         this.props.toggleOpenModal();
     }
-
-    handleChooseRole = (event) => {
-        this.setState({
-            role: event.target.value
-        })
-    }
-
     render() {
         return (
 
@@ -75,43 +66,26 @@ class ModalCreateAccount extends Component {
                 <ModalHeader
                     toggle={() => { this.toggle() }}
                     className='modal-title'
-                >Create new account</ModalHeader>
+                >Create new stock</ModalHeader>
                 <ModalBody>
                     <div className='modal-user-body'>
                         <div className='input-container'>
-                            <label>Username</label>
+                            <label>Category</label>
                             <input
                                 type="username"
                                 className="form-control"
                                 placeholder="Username"
-                                onChange={(event) => { this.handleOnChangeInput(event, "username") }}
-                                value={this.state.username}
+                                onChange={(event) => { this.handleOnChangeInput(event, "category") }}
+                                value={this.state.category}
                             />
                         </div>
-                        <div className='input-container'>
-                            <label>Password</label>
-                            <input type="password" className="form-control" placeholder="Password"
-                                onChange={(event) => { this.handleOnChangeInput(event, 'password') }}
-                                value={this.state.password} />
-                        </div>
                     </div>
-                    <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
-                        onChange={this.handleChooseRole}
-                    >
-                        <FormControlLabel className='choose-role' value="factory" control={<Radio />} label="Cơ sở sản xuất" />
-                        <FormControlLabel className='choose-role' value="agency" control={<Radio />} label="Trung tâm bảo hành" />
-                        <FormControlLabel className='choose-role' value="insurance" control={<Radio />} label="Đại lý phân phối" />
-
-                    </RadioGroup>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary"
-                        onClick={() => this.handleAddNewAccount()}
+                        onClick={() => this.handleAddNewStock()}
                     >
-                        Add new account
+                        Add new
                     </Button>
                     <Button color="secondary" onClick={() => { this.toggle() }}>Cancel</Button>
                 </ModalFooter>
@@ -128,8 +102,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addNewAccount: (username, password, role) => dispatch(actions.addNewAccount(username, password, role))
+        addNewStock: (category) => dispatch(actions.addNewStock(category))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalCreateAccount);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalCreateStock);

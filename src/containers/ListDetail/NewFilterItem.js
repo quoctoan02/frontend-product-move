@@ -35,10 +35,13 @@ class FilterItem extends Component {
 
                 {isShowFilter &&
                     <div className='filter-item-content'>
-                        <FormGroup>
-                            <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-                            <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
-                        </FormGroup>
+                        {filterInfo.value && filterInfo.value.map((item, index) =>
+                            <FormGroup>
+                                {/* <FormControlLabel control={<Checkbox defaultChecked />} label="Label" /> */}
+                                <FormControlLabel control={<Checkbox />} label={item} />
+                            </FormGroup>
+                        )}
+
                     </div>}
             </div>
         );

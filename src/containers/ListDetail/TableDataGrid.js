@@ -59,25 +59,26 @@ function CustomToolbar({ handleOpenModal }) {
 
 export default function TableDataGrid(props) {
     const [selectionModel, setSelectionModel] = useState([]);
-    const [pageSize, setPageSize] = React.useState(25);
-    const { data } = useDemoData({
-        dataSet: 'Employee',
-        visibleFields: VISIBLE_FIELDS,
-        rowLength: 100,
-    });
+    const [pageSize, setPageSize] = React.useState(10);
 
     const handleOpenModal = () => {
-        props.toggleOpenModal();
+        props.toggleOpenModalCreate();
     }
 
     const handleRowClick = (params, event, details) => {
-        console.log(params.row.name);
+        if (props.isStock) {
+            props.onRowClickFromParent(params.row)
+        } else {
+            props.toggleOpenModalShow(params.row);
+        }
     };
 
     return (
         <Box sx={{ height: '100%', width: '100%' }}>
             <DataGrid
-                {...data}
+                disableColumnMenu
+                rows={props.rows}
+                columns={props.columns}
                 sx={{
                     "& .MuiDataGrid-virtualScroller": {
                         'border-left': '1px solid #dddddd',
@@ -137,6 +138,7 @@ export default function TableDataGrid(props) {
                 pageSize={pageSize}
                 onPageSizeChange={(newPage) => setPageSize(newPage)}
                 pagination
+                rowsPerPageOptions={[10, 20, 50]}
                 onSelectionModelChange={(newSelectionModel) => {
                     setSelectionModel(newSelectionModel);
                 }}

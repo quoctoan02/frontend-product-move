@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './ProductList.scss'
 import Filter from '../../ListDetail/Filter';
-import Table from '../../ListDetail/Table';
 import ModalCreateProduct from '../../ListDetail/Modal/ModalCreateProduct';
 
 class ProductList extends Component {
@@ -57,10 +56,9 @@ class ProductList extends Component {
                     />
                 </div>
                 <div className='product-table-right'>
-                    <Table
+                    {/* <Table
                         toggleOpenModal={this.toggleOpenModal}
-
-                    />
+                    /> */}
                 </div>
             </div>
         );

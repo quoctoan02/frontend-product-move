@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Header from '../containers/Header/Header';
-import Dashboard from '../containers/System/Admin/Dashboard';
+import Dashboard from '../containers/System/DistributionAgent/Dashboard';
+import ProductList from '../containers/System/DistributionAgent/ProductList';
+import StockList from '../containers/System/DistributionAgent/StockList';
 
 class DistributionAgent extends Component {
     render() {
@@ -10,10 +12,12 @@ class DistributionAgent extends Component {
         return (
             <React.Fragment>
                 <Header />
-                <div className="system-container">
-                    <div className="system-list">
+                <div className="container">
+                    <div className="content">
                         <Switch>
-                            <Route path="/dítribution-agent/dashboard" component={Dashboard} />
+                            <Route path="/distribution-agent/dashboard" component={Dashboard} />
+                            <Route path="/distribution-agent/list-product" component={ProductList} />
+                            <Route path="/distribution-agent/list-stock" component={StockList} />
                             {/* <Route component={() => { return (<Redirect to={systemMenuPath} />) }} /> */}
 
                         </Switch>

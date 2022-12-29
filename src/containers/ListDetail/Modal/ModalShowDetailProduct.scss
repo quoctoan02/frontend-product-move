@@ -1,0 +1,79 @@
+.modal-container {
+
+    .modal-content-custom {
+        border-radius: 5px;
+        border       : none;
+
+        .modal-title {
+            border-top-left-radius : 5px;
+            border-top-right-radius: 5px;
+
+            button {
+                background-color: transparent;
+                border          : none;
+                font-size       : 30px;
+                color           : white;
+            }
+        }
+
+
+        .modal-detail-body {
+
+            .product-title {
+                font-size    : 1.5rem;
+                font-weight  : 700;
+                color        : #006fa9;
+                margin-bottom: 1.2rem;
+            }
+
+            .product-content {
+                display  : flex;
+                flex-wrap: wrap;
+                gap      : 50px;
+
+                .product-info,
+                .product-des {
+                    display       : flex;
+                    flex-direction: column;
+                    gap           : 10px;
+
+                    .product-info-container {
+                        display      : flex;
+                        border-bottom: 1px solid #eee;
+                        max-width    : 100%;
+                        gap          : 20px;
+
+                        .product-label {
+                            min-width: 100px;
+                        }
+
+                        .product-data {
+                            min-width: 150px;
+                        }
+                    }
+                }
+
+                .product-img {
+                    min-height        : 200px;
+                    width             : 200px;
+                    // border         : 1px solid #ddd;
+                    background        : center center no-repeat;
+                    background-size   : contain;
+                }
+            }
+        }
+    }
+
+    .modal-footer-custom {
+        display       : flex;
+        flex-direction: column;
+        align-items   : normal;
+
+        .list-btn {
+            display        : flex;
+            justify-content: flex-end;
+            gap            : 10px;
+            width          : 100%;
+        }
+    }
+}
