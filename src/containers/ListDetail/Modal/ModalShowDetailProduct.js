@@ -55,7 +55,7 @@ class ModalShowDetailProduct extends Component {
         if (!this.state.isExportProduct) {
             this.setState({ isExportProduct: true });
         } else {
-            let res = await factoryService.exportToAgency({
+            let res = await factoryService.factoryExportToAgency({
                 productId: this.props.productData.id,
                 factoryStockId: this.props.factoryStockId,
                 agencyStockId: this.state.dataExport.selectedStock.value,
@@ -86,7 +86,7 @@ class ModalShowDetailProduct extends Component {
         let { productData } = this.props
         let productDate = ''
         if (productData) {
-            productDate = new Date(productData.createdAt).toISOString().slice(0, 19).replace('T', ' ');
+            productDate = new Date(productData.createdAt).toISOString().slice(0, 19).replace('T', ' ').split(' ')[0];
         }
 
         return (
@@ -131,7 +131,7 @@ class ModalShowDetailProduct extends Component {
                                 </div>
                                 <div className='product-info-container'>
                                     <div className='product-label'>Ngày sản xuất:</div>
-                                    <div className='product-data'>{productDate.split(' ')[0]}</div>
+                                    <div className='product-data'>{productDate}</div>
                                 </div>
 
                             </div>

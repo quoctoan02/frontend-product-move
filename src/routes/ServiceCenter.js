@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Header from '../containers/Header/Header';
 import Dashboard from '../containers/System/Admin/Dashboard';
+import ProductList from '../containers/System/ServiceCenter/ProductList';
 
 class ServiceCenter extends Component {
     render() {
@@ -10,10 +11,12 @@ class ServiceCenter extends Component {
         return (
             <React.Fragment>
                 <Header />
-                <div className="system-container">
-                    <div className="system-list">
+                <div className="container">
+                    <div className="content">
                         <Switch>
-                            <Route path="/admin/dashboard" component={Dashboard} />
+                            <Route path="/service-center/dashboard" component={Dashboard} />
+                            <Route path="/service-center/list-product" component={ProductList} />
+
                             {/* <Route component={() => { return (<Redirect to={systemMenuPath} />) }} /> */}
 
                         </Switch>

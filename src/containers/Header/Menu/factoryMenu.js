@@ -9,17 +9,13 @@ export const factoryMenu = [
             {
                 name: 'menu.list-product', link: path.FACTORY + path.LIST_PRODUCT
             },
-
-            // { name: 'menu.system.system-parameter.header', link: '/admin/system-parameter' },
         ]
     },
-    { //hệ thống
+    { 
         name: 'menu.stock', menus: [
             {
                 name: 'menu.list-stock', link: path.FACTORY + path.LIST_STOCK
             },
-
-            // { name: 'menu.system.system-parameter.header', link: '/admin/system-parameter' },
         ]
     },
 

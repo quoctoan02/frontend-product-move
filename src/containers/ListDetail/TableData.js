@@ -9,7 +9,7 @@ export const allProductColumns = [
     {
         field: 'image_url',
         headerName: 'Ảnh sp',
-        width: 100,
+        width: 70,
         sortable: false,
         renderCell: (params) => <Avatar variant="rounded" src={params.value} />
     },
@@ -34,6 +34,46 @@ export const allProductColumns = [
         sortable: false,
         headerName: 'Mô tả chi tiết',
         width: 500,
+    },
+];
+export const productInsuranceColumns = [
+    {
+        field: 'id',
+        headerName: 'Mã Hóa đơn',
+        width: 70
+    },
+
+    {
+        field: 'image_url',
+        headerName: 'Ảnh sp',
+        width: 70,
+        sortable: false,
+        renderCell: (params) => <Avatar variant="rounded" src={params.value} />
+    },
+    {
+        field: 'product_id',
+        headerName: 'Mã sp',
+        width: 70
+    },
+    {
+        field: 'name',
+        headerName: 'Tên sản phẩm',
+        width: 150,
+    },
+    {
+        field: 'quantity',
+        headerName: 'Số lượng',
+        width: 90,
+    },
+    {
+        field: 'customer_name',
+        headerName: 'Tên khách hàng',
+        width: 180,
+    },
+    {
+        field: 'stock_name',
+        headerName: 'Kho phân phối',
+        width: 150,
     },
 ];
 
@@ -47,7 +87,7 @@ export const productInFactoryStockColumns = [
     {
         field: 'image_url',
         headerName: 'Ảnh sp',
-        width: 100,
+        width: 70,
         sortable: false,
         renderCell: (params) => <Avatar variant="rounded" src={params.value} />
     },
@@ -79,6 +119,7 @@ export const productInFactoryStockColumns = [
         width: 500,
     },
 ];
+
 export const productInDistributionAgentStockColumns = [
     {
         field: 'id',
@@ -89,7 +130,7 @@ export const productInDistributionAgentStockColumns = [
     {
         field: 'image_url',
         headerName: 'Ảnh sp',
-        width: 100,
+        width: 70,
         sortable: false,
         renderCell: (params) => <Avatar variant="rounded" src={params.value} />
     },
@@ -101,7 +142,7 @@ export const productInDistributionAgentStockColumns = [
     {
         field: 'quantity',
         headerName: 'Số lượng',
-        width: 150,
+        width: 90,
     },
     {
         field: 'product_line',
@@ -136,14 +177,88 @@ export const stockColumns = [
         field: 'name',
         headerName: 'Tên kho',
         width: 150,
-        editable: true,
+
     },
     {
         field: 'address',
         headerName: 'Địa chỉ kho',
         width: 300,
-        editable: true,
+
     }
+]
+export const customerColumns = [
+    {
+        field: 'id',
+        headerName: 'Mã kh',
+        width: 70
+    },
+    {
+        field: 'name',
+        headerName: 'Tên khách hàng',
+        width: 180,
+    },
+    {
+        field: 'phone_number',
+        headerName: 'Số điện thoại',
+        width: 120,
+    },
+    {
+        field: 'address',
+        headerName: 'Địa chỉ',
+        width: 300,
+    }
+]
+export const billColumns = [
+    {
+        field: 'id',
+        headerName: 'Mã hóa đơn',
+        width: 80
+    },
+    {
+        field: 'customer_name',
+        headerName: 'Tên khách hàng',
+        width: 180,
+    },
+    {
+        field: 'customer_phone',
+        headerName: 'Số điện thoại',
+        width: 120,
+    },
+    {
+        field: 'stock_name',
+        headerName: 'Kho phân phối',
+        width: 150,
+    },
+    {
+        field: 'sell_date',
+        headerName: 'Ngày bán',
+        width: 150,
+    }
+]
+export const productInBillColumns = [
+    {
+        field: 'id',
+        headerName: 'Mã sp',
+        width: 70
+    },
+
+    {
+        field: 'image_url',
+        headerName: 'Ảnh sp',
+        width: 70,
+        sortable: false,
+        renderCell: (params) => <Avatar variant="rounded" src={params.value} />
+    },
+    {
+        field: 'name',
+        headerName: 'Tên sản phẩm',
+        width: 150,
+    },
+    {
+        field: 'quantity',
+        headerName: 'Số lượng',
+        width: 90,
+    },
 ]
 
 

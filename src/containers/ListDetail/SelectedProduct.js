@@ -32,7 +32,14 @@ class SelectedProduct extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState !== this.state) {
-            this.props.getDataFromParent(this.state.productList)
+            let productListInfo = []
+            if (this.state.productList) {
+                productListInfo = this.state.productList.map(item => ({
+                    productId: item.id,
+                    quantity: item.quantity
+                }))
+            }
+            this.props.getDataFromParent(productListInfo)
         }
     }
 
@@ -46,7 +53,6 @@ class SelectedProduct extends Component {
 
     render() {
         let { productList } = this.state
-
 
         return (
             <div>

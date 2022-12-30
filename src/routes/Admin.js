@@ -6,6 +6,8 @@ import Dashboard from '../containers/System/Admin/Dashboard';
 import ProductList from '../containers/System/Admin/ProductList';
 import CompanyList from '../containers/System/Admin/CompanyList/CompanyList';
 import DistributionAgentList from '../containers/System/Admin/DistributionAgentList';
+import FactoryList from '../containers/System/Admin/FactoryList';
+import ServiceCenterList from '../containers/System/Admin/ServiceCenterList';
 
 class Admin extends Component {
     render() {
@@ -17,9 +19,9 @@ class Admin extends Component {
                     <div className='content'>
                         <Switch>
                             <Route path="/admin/dashboard" component={Dashboard} />
-                            <Route path="/admin/list-product" component={() => (<ProductList />)} />
-                            <Route path="/admin/subsidiary/factory" component={() => (<CompanyList typeCompany={"factory"} />)} />
-                            <Route path="/admin/subsidiary/service-center" component={() => (<CompanyList typeCompany={"service-center"} />)} />
+                            <Route path="/admin/list-product" component={ProductList} />
+                            <Route path="/admin/subsidiary/factory" component={FactoryList} />
+                            <Route path="/admin/subsidiary/service-center" component={ServiceCenterList} />
                             <Route path="/admin/partner/distribution-agent" component={DistributionAgentList} />
                             {/* <Route component={() => { return (<Redirect to={systemMenuPath} />) }} /> */}
 

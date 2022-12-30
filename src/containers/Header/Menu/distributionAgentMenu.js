@@ -23,7 +23,7 @@ export const distributionAgentMenu = [
     { //hệ thống
         name: 'menu.sell', menus: [
             {
-                name: 'menu.add-bill', link: path.DISTRIBUTION_AGENT + path.ADD_BILL
+                name: 'menu.product-insurance', link: path.DISTRIBUTION_AGENT + path.PRODUCT_INSURANCE
             },
             {
                 name: 'menu.list-bill', link: path.DISTRIBUTION_AGENT + path.LIST_BILL

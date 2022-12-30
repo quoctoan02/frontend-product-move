@@ -7,45 +7,81 @@ import { Radio, FormControlLabel, RadioGroup } from '@mui/material';
 import factoryService from '../../../services/factoryService';
 import * as actions from "../../../store/actions";
 import TableDataGrid from "../TableDataGrid";
-import { productInDistributionAgentStockColumns } from '../TableData';
+import { productInDistributionAgentStockColumns, productInBillColumns } from '../TableData';
 import _ from 'lodash';
 import ModalShowDetailProduct from './ModalShowDetailProduct';
 import ModalCreateBill from './ModalCreateBill';
+import ModalCreateInsuranceBill from './ModalCreateInsuranceBill';
 class ModalShowListProduct extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            productColumns: [],
             category: '',
-            listProductInStock: [],
+            listProduct: [],
             productDataSelected: '',
             selectedId: '',
             isOpenModalShow: false,
             isOpenModalCreate: false,
-            isOpenModalCreateSelected: false,
+            isOpenModalCreateBill: false,
+            isOpenModalCreateInsuranceBill: false,
         }
     }
 
     componentDidMount() {
-        this.handleGetProductInStock()
+        if (this.props.stockId) {
+            this.handleGetProductInStock()
+        }
+        if (this.props.customerId) {
+            //this.handleGetProductOfCustomer()
+        }
+        if (this.props.billId) {
+            this.handleGetProductInBill()
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.stockId !== this.props.stockId) {
             this.handleGetProductInStock()
         }
+        if (prevProps.billId !== this.props.billId) {
+            this.handleGetProductInBill()
+        }
     }
 
     handleGetProductInStock = async () => {
         let res = await factoryService.getProductInStock(this.props.stockId)
         if (res.product_stock_details) {
-            this.setState({ listProductInStock: [] })
+            this.setState({
+                listProduct: [],
+                productColumns: productInDistributionAgentStockColumns
+            })
             res.product_stock_details.map(async (item, index) => {
                 let productData = await factoryService.getProductInfo(item.product_id)
                 if (productData && !_.isEmpty(productData)) {
                     productData.quantity = item.quantity
                     this.setState(prevState => ({
-                        listProductInStock: [...prevState.listProductInStock, productData]
+                        listProduct: [...prevState.listProduct, productData]
+                    }))
+                }
+            })
+        }
+    }
+
+    handleGetProductInBill = async () => {
+        let res = await factoryService.getBillInfo(this.props.billId)
+        if (res) {
+            this.setState({
+                listProduct: [],
+                productColumns: productInBillColumns
+            })
+            res.product_bill_details.map(async (item, index) => {
+                let productData = await factoryService.getProductInfo(item.product_id)
+                if (productData && !_.isEmpty(productData)) {
+                    productData.quantity = item.quantity
+                    this.setState(prevState => ({
+                        listProduct: [...prevState.listProduct, productData]
                     }))
                 }
             })
@@ -62,13 +98,25 @@ class ModalShowListProduct extends Component {
     }
 
     toggleOpenModalCreate = () => {
+        if (this.props.billId) {
+            this.setState({
+                isOpenModalCreateInsuranceBill: !this.state.isOpenModalCreateInsuranceBill,
+            })
+        } else {
+            this.setState({
+                isOpenModalCreateBill: !this.state.isOpenModalCreateBill,
+            })
+        }
+
+    }
+    toggleOpenModalCreateBill = () => {
         this.setState({
-            isOpenModalCreate: !this.state.isOpenModalCreate,
+            isOpenModalCreateBill: !this.state.isOpenModalCreateBill,
         })
     }
-    toggleOpenModalCreateSelected = () => {
+    toggleOpenModalCreateInsuranceBill = () => {
         this.setState({
-            isOpenModalCreateSelected: !this.state.isOpenModalCreateSelected,
+            isOpenModalCreateInsuranceBill: !this.state.isOpenModalCreateInsuranceBill,
         })
     }
 
@@ -91,9 +139,16 @@ class ModalShowListProduct extends Component {
                     notInsertProduct={true}
                 />
                 <ModalCreateBill
+                    stockId={this.props.stockId}
                     selectedId={this.state.selectedId}
-                    isOpen={this.state.isOpenModalCreateSelected}
-                    toggleOpenModal={this.toggleOpenModalCreateSelected}
+                    isOpen={this.state.isOpenModalCreateBill}
+                    toggleOpenModal={this.toggleOpenModalCreate}
+                />
+                <ModalCreateInsuranceBill
+                    billId={this.props.billId}
+                    selectedId={this.state.selectedId}
+                    isOpen={this.state.isOpenModalCreateInsuranceBill}
+                    toggleOpenModal={this.toggleOpenModalCreate}
                 />
                 < Modal
                     isOpen={this.props.isOpen}
@@ -110,18 +165,19 @@ class ModalShowListProduct extends Component {
                         toggle={() => { this.toggle() }}
                         className='modal-title'
                     >
-                        Danh sách sản phẩm trong kho
+                        Danh sách sản phẩm
                     </ModalHeader>
                     <ModalBody
                         style={{ height: '500px' }}
                     >
-                        {this.state.listProductInStock &&
+                        {this.state.listProduct &&
                             <TableDataGrid
-                                isCreateBill={true}
+                                isCreateBill={this.props.isCreateBill}
+                                isExportInsurance={this.props.isExportInsurance}
                                 toggleOpenModalShow={this.toggleOpenModalShow}
-                                rows={this.state.listProductInStock}
-                                columns={productInDistributionAgentStockColumns}
-                                toggleOpenModalCreate={this.toggleOpenModalCreateSelected}
+                                rows={this.state.listProduct}
+                                columns={this.state.productColumns}
+                                toggleOpenModalCreate={this.toggleOpenModalCreate}
                                 getSelectedRow={this.handleSelectedProduct}
                             />}
                     </ModalBody>

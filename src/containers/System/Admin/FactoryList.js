@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Filter from '../../ListDetail/Filter';
-import Table from '../../ListDetail/Table';
 import ModalCreateAccount from '../../ListDetail/Modal/ModalCreateAccount';
 import CompanyList from './CompanyList/CompanyList';
 class FactoryList extends Component {
@@ -19,11 +18,9 @@ class FactoryList extends Component {
     }
     render() {
         return (
-            <div className='list-container'>
-                <CompanyList
-                    typeFactory={"factory"}
-                />
-            </div>
+            <CompanyList
+                typeCompany={"factory"}
+            />
         );
     }
 

@@ -8,7 +8,6 @@ import StockList from '../containers/System/Factory/StockList';
 
 class Factory extends Component {
     render() {
-        const { systemMenuPath, isLoggedIn } = this.props;
         return (
             <React.Fragment>
                 <Header />

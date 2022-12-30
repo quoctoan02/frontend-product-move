@@ -1,0 +1,13 @@
+@import "../../../styles/common.scss";
+
+.list-container {
+    display: flex;
+
+    .filter-box-left {
+        @extend %filter-box-left;
+    }
+
+    .product-table-right {
+        @extend %product-table-right;
+    }
+}

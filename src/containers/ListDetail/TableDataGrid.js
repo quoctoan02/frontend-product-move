@@ -28,17 +28,18 @@ function CustomToolbar(props) {
             <GridToolbarDensitySelector />
             <GridToolbarExport />
 
-            <Button
-                variant="contained"
-                size="small"
-                startIcon=''
-                onClick={() => {
-                    props.handleOpenModalCreate();
-                    //setAnchorElMenu(event.currentTarget);
-                }}
-            >
-                ADD
-            </Button>
+            {props.canAdd &&
+                <Button
+                    variant="contained"
+                    size="small"
+                    startIcon=''
+                    onClick={() => {
+                        props.handleOpenModalCreate();
+                        //setAnchorElMenu(event.currentTarget);
+                    }}
+                >
+                    ADD
+                </Button>}
             {props.isCreateBill &&
                 <Button
                     variant="contained"
@@ -51,6 +52,45 @@ function CustomToolbar(props) {
                     }}
                 >
                     Tạo hóa đơn
+                </Button>}
+            {props.isExportInsurance &&
+                <Button
+                    variant="contained"
+                    size="small"
+                    startIcon=''
+                    disabled={props.selectionModel.length === 0}
+                    onClick={() => {
+                        props.handleOpenModalCreate();
+                        //setAnchorElMenu(event.currentTarget);
+                    }}
+                >
+                    Yêu cầu bảo hành
+                </Button>}
+            {props.isExportAgency &&
+                <Button
+                    variant="contained"
+                    size="small"
+                    startIcon=''
+                    disabled={props.selectionModel.length === 0}
+                    onClick={() => {
+                        props.handleOpenModalCreate("export-agency");
+                        //setAnchorElMenu(event.currentTarget);
+                    }}
+                >
+                    Đã bảo hành
+                </Button>}
+            {props.isExportFactory &&
+                <Button
+                    variant="contained"
+                    size="small"
+                    startIcon=''
+                    disabled={props.selectionModel.length === 0}
+                    onClick={() => {
+                        props.handleOpenModalCreate("export-factory");
+                        //setAnchorElMenu(event.currentTarget);
+                    }}
+                >
+                    Trả về nhà máy
                 </Button>}
 
             {/* <Menu
@@ -73,8 +113,8 @@ export default function TableDataGrid(props) {
     const [selectionModel, setSelectionModel] = useState([]);
     const [pageSize, setPageSize] = React.useState(10);
 
-    const handleOpenModalCreate = () => {
-        props.toggleOpenModalCreate();
+    const handleOpenModalCreate = (type) => {
+        props.toggleOpenModalCreate(type);
     }
 
     const handleSelectedRow = (rowIds) => {
@@ -174,6 +214,10 @@ export default function TableDataGrid(props) {
                         selectionModel,
                         handleOpenModalCreate,
                         isCreateBill: props.isCreateBill,
+                        canAdd: props.canAdd,
+                        isExportInsurance: props.isExportInsurance,
+                        isExportAgency: props.isExportAgency,
+                        isExportFactory: props.isExportFactory,
                     },
                 }}
             />

@@ -14,6 +14,7 @@ export const path = {
     LIST_BILL: "/list-bill",
     ADD_BILL: "/add-bill",
     LIST_CUSTOMER: "/list-customer",
+    PRODUCT_INSURANCE: "/product-insurance",
 };
 
 export const USER_ROLE = {

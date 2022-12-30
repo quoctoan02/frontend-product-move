@@ -81,6 +81,7 @@ class ProductList extends Component {
                 </div>
                 <div className='product-table-right'>
                     <TableDataGrid
+                        canAdd={true}
                         rows={this.state.listProduct}
                         columns={allProductColumns}
                         toggleOpenModalCreate={this.toggleOpenModalCreate}

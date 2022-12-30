@@ -57,7 +57,7 @@ class Header extends Component {
                             <i className='fas fa-question-circle'> Support </i>
                         </div>
                         <span className='account'>
-                            Account 123
+                            admin
                         </span>
                         <div className="btn btn-logout" onClick={processLogout} title='Log out'>
                             <i className="fas fa-sign-out-alt"></i>

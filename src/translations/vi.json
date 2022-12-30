@@ -43,7 +43,9 @@
         "list-bill": "Danh sách hóa đơn",
         "sell": "Bán hàng",
         "list-customer": "Danh sách khách hàng",
-        "add-bill": "Nhập hóa đơn"
+        "add-bill": "Nhập hóa đơn",
+        "product-insurance": "Sản phẩm bảo hành",
+        "insurance": "Bảo hành"
     },
     "system": {
         "dashboard": {

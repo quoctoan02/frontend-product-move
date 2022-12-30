@@ -7,7 +7,7 @@ import ModalShowListProduct from '../../ListDetail/Modal/ModalShowListProduct';
 import TableDataGrid from '../../ListDetail/TableDataGrid'
 import factoryService from '../../../services/factoryService';
 import * as actions from '../../../store/actions';
-import { stockColumns } from '../../ListDetail/TableData';
+import { customerColumns } from '../../ListDetail/TableData';
 
 class StockList extends Component {
     constructor(props) {
@@ -23,18 +23,23 @@ class StockList extends Component {
             isOpenModalCreate: false,
             isOpenModalShow: false,
             filterTitle: 'Sản phẩm',
-            listStock: '',
-            stockIdSelected: ''
+            listCustomer: '',
+            customerIdSelected: ''
         }
     }
 
-    componentDidMount() {
-        this.props.fetchStockList("agency");
+    async componentDidMount() {
+        let res = await factoryService.getCustomerList()
+        if (res) {
+            this.setState({
+                listCustomer: res
+            })
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.stockList !== this.props.stockList) {
-            this.setState({ listStock: this.props.stockList });
+        if (prevProps.customerList !== this.props.customerList) {
+            this.setState({ listCustomer: this.props.customerList });
         }
     }
 
@@ -51,21 +56,21 @@ class StockList extends Component {
 
     handleOnRowClick = (rowData) => {
         this.toggleOpenModalShow()
-        this.setState({ stockIdSelected: rowData.id })
+        this.setState({ customerIdSelected: rowData.id })
     }
 
     render() {
+        console.log(this.state.listCustomer)
         return (
             <div className='list-container'>
-                <ModalCreateStock
+                {/* <ModalCreateStock
                     isOpen={this.state.isOpenModalCreate}
                     toggleOpenModal={this.toggleOpenModalCreate}
                     createStock={this.createStock}
                     category={"agency"}
-                />
+                /> */}
                 <ModalShowListProduct
-                    isCreateBill={true}
-                    stockId={this.state.stockIdSelected}
+                    customerId={this.state.customerIdSelected}
                     isOpen={this.state.isOpenModalShow}
                     toggleOpenModal={this.toggleOpenModalShow}
                 />
@@ -78,11 +83,10 @@ class StockList extends Component {
                 </div>
                 <div className='product-table-right'>
                     <TableDataGrid
-                        canAdd={true}
                         isStock={true}
                         onRowClickFromParent={this.handleOnRowClick}
-                        rows={this.state.listStock}
-                        columns={stockColumns}
+                        rows={this.state.listCustomer}
+                        columns={customerColumns}
                         toggleOpenModalCreate={this.toggleOpenModalCreate}
                     />
                 </div>

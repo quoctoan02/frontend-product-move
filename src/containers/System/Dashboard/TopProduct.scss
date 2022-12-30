@@ -1,4 +1,4 @@
-@import "../../../../styles/common.scss";
+@import "../../../styles/common.scss";
 
 .top-product-box {
     display       : flex;
@@ -13,5 +13,7 @@
         }
     }
 
-    .top-product-content {}
+    .top-product-content {
+        height: fit-content;
+    }
 }

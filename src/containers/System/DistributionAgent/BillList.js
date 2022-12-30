@@ -7,7 +7,8 @@ import ModalShowListProduct from '../../ListDetail/Modal/ModalShowListProduct';
 import TableDataGrid from '../../ListDetail/TableDataGrid'
 import factoryService from '../../../services/factoryService';
 import * as actions from '../../../store/actions';
-import { stockColumns } from '../../ListDetail/TableData';
+import { billColumns } from '../../ListDetail/TableData';
+import _ from 'lodash';
 
 class StockList extends Component {
     constructor(props) {
@@ -23,19 +24,45 @@ class StockList extends Component {
             isOpenModalCreate: false,
             isOpenModalShow: false,
             filterTitle: 'Sản phẩm',
-            listStock: '',
-            stockIdSelected: ''
+            listBill: '',
+            billIdSelected: ''
         }
     }
 
-    componentDidMount() {
-        this.props.fetchStockList("agency");
+    async componentDidMount() {
+        let res = await factoryService.getBillList()
+        this.handleBuildBillData(res)
+    }
+
+    handleBuildBillData = (data) => {
+        if (data) {
+            this.setState({ listBill: [] })
+            data.map(async (item, index) => {
+                let billData = ''
+                let customerData = await factoryService.getCustomerInfo(item.customer_id)
+                let stockData = await factoryService.getStockInfo(item.stock_id)
+
+                if (customerData && stockData && !_.isEmpty(customerData) && !_.isEmpty(stockData)) {
+                    let billDate = new Date(item.createdAt).toISOString().slice(0, 19).replace('T', ' ').split(' ')[0];
+                    billData = {
+                        id: item.id,
+                        customer_name: customerData.name,
+                        customer_phone: customerData.phone_number,
+                        stock_name: stockData.name,
+                        sell_date: billDate
+                    }
+                    this.setState(prevState => ({
+                        listBill: [...prevState.listBill, billData]
+                    }))
+                }
+            })
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.stockList !== this.props.stockList) {
-            this.setState({ listStock: this.props.stockList });
-        }
+        // if (prevProps.billList !== this.props.billList) {
+        //     this.setState({ listBill: this.props.billList });
+        // }
     }
 
     toggleOpenModalCreate = () => {
@@ -51,21 +78,21 @@ class StockList extends Component {
 
     handleOnRowClick = (rowData) => {
         this.toggleOpenModalShow()
-        this.setState({ stockIdSelected: rowData.id })
+        this.setState({ billIdSelected: rowData.id })
     }
 
     render() {
         return (
             <div className='list-container'>
-                <ModalCreateStock
+                {/* <ModalCreateStock
                     isOpen={this.state.isOpenModalCreate}
                     toggleOpenModal={this.toggleOpenModalCreate}
                     createStock={this.createStock}
                     category={"agency"}
-                />
+                /> */}
                 <ModalShowListProduct
-                    isCreateBill={true}
-                    stockId={this.state.stockIdSelected}
+                    isExportInsurance={true}
+                    billId={this.state.billIdSelected}
                     isOpen={this.state.isOpenModalShow}
                     toggleOpenModal={this.toggleOpenModalShow}
                 />
@@ -78,11 +105,10 @@ class StockList extends Component {
                 </div>
                 <div className='product-table-right'>
                     <TableDataGrid
-                        canAdd={true}
                         isStock={true}
                         onRowClickFromParent={this.handleOnRowClick}
-                        rows={this.state.listStock}
-                        columns={stockColumns}
+                        rows={this.state.listBill}
+                        columns={billColumns}
                         toggleOpenModalCreate={this.toggleOpenModalCreate}
                     />
                 </div>

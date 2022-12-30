@@ -60,12 +60,12 @@ class Login extends Component {
 
             let res = await userService.handleLoginApi(this.state.username, this.state.password, roleUrl)
             if (res.accessToken) {
+                localStorage.setItem('accessToken', res.accessToken)
                 this.props.userLoginSuccess({
                     username: this.state.username,
                     password: this.state.password,
                     role: this.state.role,
                 });
-                localStorage.setItem('accessToken', res.accessToken)
                 this.refresh()
                 this.redirectToDashboardPage(this.state.role)
             }

@@ -11,6 +11,17 @@ export const serviceCenterMenu = [
             },
         ]
     },
+    { //hệ thống
+        name: 'menu.insurance', menus: [
+            {
+                name: 'menu.list-bill', link: path.SERVICE_CENTER + path.LIST_BILL
+            },
+            {
+                name: 'menu.list-customer', link: path.SERVICE_CENTER + path.LIST_CUSTOMER
+            },
+
+        ]
+    },
 
     { //hệ thống
         name: 'menu.report', menus: [
@@ -20,3 +31,4 @@ export const serviceCenterMenu = [
         ]
     },
 ];
+

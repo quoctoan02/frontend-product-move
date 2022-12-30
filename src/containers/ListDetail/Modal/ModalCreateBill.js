@@ -17,6 +17,8 @@ class ModalCreateBill extends Component {
         this.state = {
             hasCustomer: true,
             customerInfo: '',
+            customerId: '',
+            stockId: '',
             selectedId: '',
             listProduct: '',
         }
@@ -37,17 +39,29 @@ class ModalCreateBill extends Component {
 
     handleCreateBill = async () => {
         if (this.state.hasCustomer) {
-            let res = await factoryService.createBill()
+            await factoryService.createBill({
+                customerId: this.state.customerId,
+                stockId: this.props.stockId,
+                bill: this.state.listProduct,
+            })
         } else {
-            await factoryService.createNewCustomer(this.state.customerInfo)
+            let res = await factoryService.createNewCustomer(this.state.customerInfo)
+            if (res.customer) {
+                let message = await factoryService.createBill({
+                    customerId: res.customer.id,
+                    stockId: this.props.stockId,
+                    bill: this.state.listProduct,
+                })
+                console.log(message)
+            }
         }
+        this.toggle()
     }
 
     getCustomerInfo = async (data) => {
-        console.log(data);
         if (data.hasCustomer) {
             this.setState({
-                customerInfo: data.selectedCustomer,
+                customerId: data.selectedCustomer.value,
                 hasCustomer: data.hasCustomer
             })
         } else {
@@ -64,14 +78,12 @@ class ModalCreateBill extends Component {
     }
 
     getSelectedProduct = (data) => {
-        console.log(data)
         this.setState({
             listProduct: data
         })
     }
 
     render() {
-        let { imageUrl, name, line, description, price } = this.state
         return (
             <Modal
                 isOpen={this.props.isOpen}
@@ -92,7 +104,7 @@ class ModalCreateBill extends Component {
                 </ModalHeader>
                 <ModalBody>
                     <SelectedProduct
-                        selectedId={this.state.selectedId}
+                        selectedId={this.props.selectedId}
                         getDataFromParent={this.getSelectedProduct}
                     />
                     <FormCustomerInfo
