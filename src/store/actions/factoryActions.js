@@ -96,11 +96,10 @@ export const addNewProduct = (data) => {
     }
 }
 
-export const addNewStock = (category) => {
+export const addNewStock = (category, data) => {
     return async (dispatch, getState) => {
         try {
-            let res = await factoryService.createNewStock(category)
-            console.log(res)
+            let res = await factoryService.createNewStock(category, data)
             if (res) {
                 toast.success(res.message)
                 dispatch({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import './ModalCreateProduct.scss'
+import './ModalCreate.scss'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import MuiDatePicker from '../../../components/Input/MuiDatePicker';
 import { TextField, Box } from '@mui/material';

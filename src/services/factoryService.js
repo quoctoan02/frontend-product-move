@@ -3,8 +3,14 @@ const factoryService = {
     createNewProduct(data) {
         return axios.post(`api/products/create`, data)
     },
-    createNewStock(category) {
-        return axios.post(`api/stocks/${category}`)
+    createNewStock(category, data) {
+        return axios.post(`api/stocks/${category}`, data)
+    },
+    createNewCustomer(data) {
+        return axios.post(`api/agency/customers`, data)
+    },
+    createBill(data) {
+        return axios.post(`api/agency/customers`, data)
     },
 
     getProductList() {
@@ -14,6 +20,7 @@ const factoryService = {
         return axios.get(`api/products/${id}`)
 
     },
+
     getStockList(category) {
         return axios.get(`api/stocks/category/${category}`)
     },
@@ -25,6 +32,9 @@ const factoryService = {
     },
     insertProduct(data) {
         return axios.post(`api/factory/stock/insert-product`, data)
+    },
+    getCustomerList() {
+        return axios.get(`api/customers`)
     }
 
 };

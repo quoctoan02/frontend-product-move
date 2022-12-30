@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import './ModalCreateAccount.scss'
+import './ModalCreate.scss'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Radio, FormControlLabel, RadioGroup } from '@mui/material';
 import factoryService from '../../../services/factoryService';
 import * as actions from "../../../store/actions";
 import TableDataGrid from "../TableDataGrid";
-import { productColumns } from '../TableData';
+import { productInDistributionAgentStockColumns } from '../TableData';
 import _ from 'lodash';
 import ModalShowDetailProduct from './ModalShowDetailProduct';
+import ModalCreateBill from './ModalCreateBill';
 class ModalShowListProduct extends Component {
 
     constructor(props) {
@@ -18,7 +19,10 @@ class ModalShowListProduct extends Component {
             category: '',
             listProductInStock: [],
             productDataSelected: '',
+            selectedId: '',
             isOpenModalShow: false,
+            isOpenModalCreate: false,
+            isOpenModalCreateSelected: false,
         }
     }
 
@@ -39,6 +43,7 @@ class ModalShowListProduct extends Component {
             res.product_stock_details.map(async (item, index) => {
                 let productData = await factoryService.getProductInfo(item.product_id)
                 if (productData && !_.isEmpty(productData)) {
+                    productData.quantity = item.quantity
                     this.setState(prevState => ({
                         listProductInStock: [...prevState.listProductInStock, productData]
                     }))
@@ -56,8 +61,23 @@ class ModalShowListProduct extends Component {
         })
     }
 
+    toggleOpenModalCreate = () => {
+        this.setState({
+            isOpenModalCreate: !this.state.isOpenModalCreate,
+        })
+    }
+    toggleOpenModalCreateSelected = () => {
+        this.setState({
+            isOpenModalCreateSelected: !this.state.isOpenModalCreateSelected,
+        })
+    }
+
     toggle = () => {
         this.props.toggleOpenModal();
+    }
+
+    handleSelectedProduct = (selectedId) => {
+        this.setState({ selectedId })
     }
 
     render() {
@@ -69,6 +89,11 @@ class ModalShowListProduct extends Component {
                     isOpen={this.state.isOpenModalShow}
                     toggleOpenModal={this.toggleOpenModalShow}
                     notInsertProduct={true}
+                />
+                <ModalCreateBill
+                    selectedId={this.state.selectedId}
+                    isOpen={this.state.isOpenModalCreateSelected}
+                    toggleOpenModal={this.toggleOpenModalCreateSelected}
                 />
                 < Modal
                     isOpen={this.props.isOpen}
@@ -92,19 +117,14 @@ class ModalShowListProduct extends Component {
                     >
                         {this.state.listProductInStock &&
                             <TableDataGrid
+                                isCreateBill={true}
                                 toggleOpenModalShow={this.toggleOpenModalShow}
                                 rows={this.state.listProductInStock}
-                                columns={productColumns}
-                            //toggleOpenModal={this.toggleOpenModal}
+                                columns={productInDistributionAgentStockColumns}
+                                toggleOpenModalCreate={this.toggleOpenModalCreateSelected}
+                                getSelectedRow={this.handleSelectedProduct}
                             />}
                     </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary"
-                        >
-                            Add new
-                        </Button>
-                        <Button color="secondary" onClick={() => { this.toggle() }}>Cancel</Button>
-                    </ModalFooter>
                 </Modal >
             </div>
         )

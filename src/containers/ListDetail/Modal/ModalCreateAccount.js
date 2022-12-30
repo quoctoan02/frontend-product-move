@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import './ModalCreateAccount.scss'
+import './ModalCreate.scss'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Radio, FormControlLabel, RadioGroup } from '@mui/material';
 import adminService from '../../../services/adminService';

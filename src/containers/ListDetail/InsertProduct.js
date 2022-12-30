@@ -3,27 +3,43 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import factoryService from '../../services/factoryService';
 import './InsertProduct.scss'
+import Select from 'react-select';
 
 class InsertProduct extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            quantity: 0,
-            stockId: '',
-            productId: '',
+            quantity: 1,
             stockList: [],
+            selectedStock: ''
         }
     }
 
     async componentDidMount() {
         let stockList = await factoryService.getStockList("factory")
         this.setState({
-            stockList: stockList,
-            stockId: stockList[0].id
+            stockList: this.handleBuildDataSelect(stockList)
         })
-        this.props.getDataFromParent(this.state)
+    }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState !== this.state) {
+            this.props.getDataFromParent(this.state)
+        }
+    }
+
+    handleBuildDataSelect = (data) => {
+        let result = []
+        if (data && data.length > 0) {
+            data.map((item, index) => {
+                let object = {}
+                object.label = item.name;
+                object.value = item.id;
+                result.push(object)
+            })
+        }
+        return result;
     }
 
     handleOnChangeInput = (event, id) => {
@@ -32,30 +48,31 @@ class InsertProduct extends Component {
         this.setState({
             ...copyState
         })
-        this.props.getDataFromParent(copyState)
+    }
+
+    handleOnchangeStock = (selectedStock) => {
+        this.setState({ selectedStock })
     }
 
     render() {
-        let { stockList, quantity } = this.state
-        console.log(this.state.stockId, stockList)
+        let { stockList, quantity, selectedStock } = this.state
         return (
             <div className='insert-product-container'>
                 <div className='col-md-4'>
-                    <label class="form-label">Chọn kho</label>
-                    <select className="form-select choose-stock"
-                        value={this.state.stockId}
-                        onChange={(event) => this.handleOnChangeInput(event, 'stockId')}
-                    >
-                        {stockList && stockList.map((item, index) =>
-                            <option key={index} value={item.id}>{item.name}</option>
-                        )}
-                    </select>
+                    <label class="form-label">Chọn kho sản xuất</label>
+                    <Select
+                        value={selectedStock}
+                        onChange={this.handleOnchangeStock}
+                        options={stockList}
+                        placeholder={"Chọn kho"}
+                    />
                 </div>
                 <div className='col-md-2'>
                     <label class="form-label">Số lượng</label>
                     <input type="number"
                         className='form-control'
                         value={quantity}
+                        min={1}
                         onChange={(event) => this.handleOnChangeInput(event, 'quantity')}
                     />
                 </div>

@@ -10,7 +10,10 @@ export const path = {
     FACTORY: "/factory",
     DISTRIBUTION_AGENT: "/distribution-agent",
     REPORT: "/report",
-    LIST_STOCK: "/list-stock"
+    LIST_STOCK: "/list-stock",
+    LIST_BILL: "/list-bill",
+    ADD_BILL: "/add-bill",
+    LIST_CUSTOMER: "/list-customer",
 };
 
 export const USER_ROLE = {

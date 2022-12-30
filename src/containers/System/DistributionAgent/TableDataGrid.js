@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Grid, Box, Menu, MenuItem, Button } from '@mui/material';
-import { useDemoData } from '@mui/x-data-grid-generator';
-import MuiIcons from '../../components/MuiIcons'
-import LinearProgress from '@mui/material/LinearProgress';
 import {
     DataGrid,
     GridToolbar,
@@ -14,9 +11,8 @@ import {
     GridToolbarDensitySelector,
     MoreVertIcon
 } from '@mui/x-data-grid';
-const VISIBLE_FIELDS = ['name', 'rating', 'country', 'dateCreated', 'isAdmin'];
 
-function CustomToolbar(props) {
+function CustomToolbar({ handleOpenModal, selectionModel }) {
     const [anchorElMenu, setAnchorElMenu] = useState(null);
     const openMenu = Boolean(anchorElMenu);
 
@@ -32,26 +28,14 @@ function CustomToolbar(props) {
                 variant="contained"
                 size="small"
                 startIcon=''
+                disabled={selectionModel.length === 0}
                 onClick={() => {
-                    props.handleOpenModalCreate();
+                    handleOpenModal();
                     //setAnchorElMenu(event.currentTarget);
                 }}
             >
-                ADD
+                Nhập hóa đơn
             </Button>
-            {props.isCreateBill &&
-                <Button
-                    variant="contained"
-                    size="small"
-                    startIcon=''
-                    disabled={props.selectionModel.length === 0}
-                    onClick={() => {
-                        props.handleOpenModalCreate();
-                        //setAnchorElMenu(event.currentTarget);
-                    }}
-                >
-                    Tạo hóa đơn
-                </Button>}
 
             {/* <Menu
                 id="menu-options"
@@ -73,12 +57,8 @@ export default function TableDataGrid(props) {
     const [selectionModel, setSelectionModel] = useState([]);
     const [pageSize, setPageSize] = React.useState(10);
 
-    const handleOpenModalCreate = () => {
+    const handleOpenModal = () => {
         props.toggleOpenModalCreate();
-    }
-
-    const handleSelectedRow = (rowIds) => {
-        props.getSelectedRow(rowIds);
     }
 
     const handleRowClick = (params, event, details) => {
@@ -138,10 +118,8 @@ export default function TableDataGrid(props) {
                     },
                     '& .MuiDataGrid-row.Mui-selected': {
                         backgroundColor: "#36e75d21"
-                        //backgroundColor: "rgb(0 255 56 / 13%)"
                     },
                     '& .MuiDataGrid-row.Mui-selected:hover': {
-                        //backgroundColor: "rgba(87, 197, 111, 0.13)"
                         backgroundColor: "#b7f9da"
                     },
                     '& .MuiDataGrid-row:nth-child(even):not(:hover):not(.MuiDataGrid-row.Mui-selected)': {
@@ -157,7 +135,6 @@ export default function TableDataGrid(props) {
                 rowsPerPageOptions={[10, 20, 50]}
                 onSelectionModelChange={(newSelectionModel) => {
                     setSelectionModel(newSelectionModel);
-                    handleSelectedRow(newSelectionModel)
                 }}
                 selectionModel={selectionModel}
                 //loading
@@ -168,12 +145,10 @@ export default function TableDataGrid(props) {
                     Toolbar: CustomToolbar,
                     //LoadingOverlay: LinearProgress,
                 }}
-                get
                 componentsProps={{
                     toolbar: {
                         selectionModel,
-                        handleOpenModalCreate,
-                        isCreateBill: props.isCreateBill,
+                        handleOpenModal
                     },
                 }}
             />

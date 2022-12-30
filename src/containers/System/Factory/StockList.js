@@ -79,7 +79,7 @@ class StockList extends Component {
                 <ModalCreateStock
                     isOpen={this.state.isOpenModalCreate}
                     toggleOpenModal={this.toggleOpenModalCreate}
-                    createStock={this.createStock}
+                    category={"factory"}
                 />
                 <ModalShowListProduct
                     stockId={this.state.stockIdSelected}

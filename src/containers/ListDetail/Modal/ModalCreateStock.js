@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import './ModalCreateAccount.scss'
+import './ModalCreate.scss'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Radio, FormControlLabel, RadioGroup } from '@mui/material';
 import adminService from '../../../services/adminService';
@@ -12,7 +12,8 @@ class ModalCreateStock extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: '',
+            name: '',
+            'address': '',
         }
     }
 
@@ -35,7 +36,10 @@ class ModalCreateStock extends Component {
     handleAddNewStock = async () => {
         let isValid = this.checkValidInput();
         if (isValid === true) {
-            this.props.addNewStock(this.state.category)
+            this.props.addNewStock(this.props.category, {
+                name: this.state.name,
+                address: this.state.address
+            })
             this.toggle()
         }
     }
@@ -70,13 +74,19 @@ class ModalCreateStock extends Component {
                 <ModalBody>
                     <div className='modal-user-body'>
                         <div className='input-container'>
-                            <label>Category</label>
+                            <label>Tên kho</label>
                             <input
-                                type="username"
                                 className="form-control"
-                                placeholder="Username"
-                                onChange={(event) => { this.handleOnChangeInput(event, "category") }}
-                                value={this.state.category}
+                                onChange={(event) => { this.handleOnChangeInput(event, "name") }}
+                                value={this.state.name}
+                            />
+                        </div>
+                        <div className='input-container'>
+                            <label>Địa chỉ kho</label>
+                            <input
+                                className="form-control"
+                                onChange={(event) => { this.handleOnChangeInput(event, "address") }}
+                                value={this.state.address}
                             />
                         </div>
                     </div>
@@ -102,7 +112,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addNewStock: (category) => dispatch(actions.addNewStock(category))
+        addNewStock: (category, data) => dispatch(actions.addNewStock(category, data))
     };
 };
 

@@ -7,7 +7,7 @@ import ModalCreateProduct from '../../ListDetail/Modal/ModalCreateProduct';
 import TableDataGrid from '../../ListDetail/TableDataGrid'
 import factoryService from '../../../services/factoryService';
 import * as actions from '../../../store/actions';
-import { productColumns } from '../../ListDetail/TableData';
+import { allProductColumns } from '../../ListDetail/TableData';
 
 class ProductList extends Component {
     constructor(props) {
@@ -82,7 +82,7 @@ class ProductList extends Component {
                 <div className='product-table-right'>
                     <TableDataGrid
                         rows={this.state.listProduct}
-                        columns={productColumns}
+                        columns={allProductColumns}
                         toggleOpenModalCreate={this.toggleOpenModalCreate}
                         toggleOpenModalShow={this.toggleOpenModalShow}
                     />

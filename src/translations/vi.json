@@ -39,7 +39,11 @@
             "create-account": "Cấp tài khoản"
         },
         "stock": "Kho",
-        "list-stock": "Danh sách kho"
+        "list-stock": "Danh sách kho",
+        "list-bill": "Danh sách hóa đơn",
+        "sell": "Bán hàng",
+        "list-customer": "Danh sách khách hàng",
+        "add-bill": "Nhập hóa đơn"
     },
     "system": {
         "dashboard": {

@@ -41,7 +41,7 @@ class ModalShowDetailProduct extends Component {
         } else {
             let res = await factoryService.insertProduct({
                 productId: this.props.productData.id,
-                stockId: this.state.dataInsert.stockId,
+                stockId: this.state.dataInsert.selectedStock.value,
                 quantity: this.state.dataInsert.quantity
             })
             if (res) {
@@ -58,7 +58,7 @@ class ModalShowDetailProduct extends Component {
             let res = await factoryService.exportToAgency({
                 productId: this.props.productData.id,
                 factoryStockId: this.props.factoryStockId,
-                agencyStockId: this.state.dataExport.stockId,
+                agencyStockId: this.state.dataExport.selectedStock.value,
                 quantity: this.state.dataExport.quantity
             })
             if (res) {
